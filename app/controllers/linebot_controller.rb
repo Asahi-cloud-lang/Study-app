@@ -17,8 +17,7 @@ class LinebotController < ApplicationController
             config.channel_token = ENV['CHANNEL_TOKEN']
         }
         user_id =  ENV['USER_ID']
-        response = client.push_message(user_id, message)
-        p response
+        client.push_message(user_id, message)
     end
 end
 
