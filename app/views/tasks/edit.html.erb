@@ -1,0 +1,40 @@
+<% provide(:title, 'Edit Task') %>
+<% provide(:button_text, '更新') %>
+<h1 class="base-font-color">タスク編集</h1>
+
+<div class="row form-font-color">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @task, url: update_task_user_path, local: true) do |f| %>
+      <%= render 'shared/error_messages', object: @task %>
+
+      <%= f.label :name, class: "label-task" %>
+      <%= f.text_field :name, class: "form-control" %>
+
+      <%= f.label :detail, class: "label-task" %>
+      <%= f.text_area :detail, class: "form-control" %>
+
+      <%= f.label :start_day, class: "label-task" %>
+      <%= f.date_field :start_day, class: "form-control" %>
+
+      <%= f.label :finish_day, class: "label-task" %>
+      <%= f.date_field:finish_day, class: "form-control" %>
+      
+      <%= f.label :status, class: "label-task task-content-detail" %>
+      <%= f.select :status, {'未完了': false, '完了': true}, { class: "form-control" } %>
+      
+      <%= f.label :progress, class: "label-task" %>
+      <div class="task-progress">
+        <span>0%</span><%= f.range_field :progress, in: 1..100, class: "form-control" %><span>100%</span>  
+      </div>
+      
+      <%= f.label :total, class: "label-task" %>
+      <div class="task-total">
+        <%= f.number_field :total, in: 1.0..200.0, step: 0.25, class: "form-control" %><span>時間</span>
+      </div>
+      
+
+      <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-task" %>
+      
+    <% end %>
+  </div>
+</div>

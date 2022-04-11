@@ -1,0 +1,26 @@
+<% provide(:title, 'New Task') %>
+<% provide(:button_text, '新規作成') %>
+<h1 class="base-font-color">タスク登録</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 form-font-color">
+    <%= form_with(model: @tasks, local: true) do |f| %>
+      <%= render 'shared/error_messages', object: @task %>
+
+      <%= f.label "名前", class: "label-task" %>
+      <%= f.text_field :name, class: "form-control" %>
+
+      <%= f.label "詳細", class: "label-task" %>
+      <%= f.text_area :detail, class: "form-control" %>
+
+      <%= f.label "開始予定日", class: "label-task" %>
+      <%= f.date_field :start_day, class: "form-control" %>
+
+      <%= f.label "終了予定日", class: "label-task" %>
+      <%= f.date_field:finish_day, class: "form-control" %>
+
+      <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-task" %>
+      
+    <% end %>
+  </div>
+</div>

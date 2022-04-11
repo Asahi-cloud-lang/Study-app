@@ -1,0 +1,160 @@
+<% provide(:title, @user.name) %>
+<div>
+  <table class="table table-bordered table-condensed user-table">
+    <tr>
+      <th>名前</th>
+      <th>日付</th>
+      <th>曜日</th>
+    </tr>
+
+    <tr>
+      <td> 名前：<%= @user.name %></td>
+      <td><%= Date.today %></td>
+      <td><%= @week %></td>
+    </tr>
+  </table>
+</div>
+<div>
+  <div class="task-box">
+    <h2>タスク一覧</h2>
+    <ul>
+      <% @tasks.each do |task| %>
+        <li>
+            <% if task.finish_day < @today %>
+              <span class="task-name text-danger"><%= link_to task.name, show_task_user_path(@user, task.id), class: "text-danger" %>
+            <% else %>
+              <span class="task-name"><%= link_to task.name, show_task_user_path(@user, task.id) %></span>
+            <% end %>
+            <%= link_to "編集", edit_task_user_path(@user, task.id), class: "btn btn-success"  %>
+            <%= link_to "削除", delete_task_user_path(@user, task.id) , method: :delete,
+                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+        </li>
+        <div class="task-message">
+          <% if task.finish_day && task.finish_day < @today  %>
+            <span class="text-danger"><%= task.finish_day.strftime('%Y/%m/%d') %>に終了予定でしたが、期限を過ぎています。</span>
+          <% elsif task.finish_day %>
+            <span class="text-info"><%= task.finish_day.strftime('%Y/%m/%d') %>までに終了予定です。</span>
+          <% else %>
+            未定
+          <% end %>
+        </div>
+        <div class="task-graph">
+          <%# グラフ %>
+          <%= bar_chart [['進捗', task.progress]], min: 0, max: 100, height: "60px" %>
+        </div>
+        <div class="task-line">
+          <%= link_to "タスクをLINEに連携", linebot_path(task.id), method: :post,
+            data: { confirm: "Lineに連携してよろしいですか？" }, class: "btn btn-info"  %>
+        </div>
+      <% end %>
+    </ul>
+    <div class="task-btn">
+      <%= link_to "タスク新規作成", new_task_user_path(@user), class: "btn btn-primary" %>
+    </div>
+    <div class="task-btn">
+      <%= link_to "タスク一覧（完了含む）", all_task_user_path(@user), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+<div class="slick">
+  <div>
+    <div class="weather-box">
+      <div class="weather">
+        <h2 class="weather-box-title">本日の天気（厚木市）</h2>
+        <div><img src="<%= @img_url %>" alt=""></div>
+        <div class="weather-content"><%= @weather %></div>
+        <%= line_chart [['今の気温', @now_temp_max.round(1)],['3時間後の気温', @three_temp_max.round(1)],['6時間後の気温', @six_temp_max.round(1)],['9時間後の気温', @nine_temp_max.round(1)]], min: 0, max: 30, height: "200px" %>
+      </div>
+      <div class="scenery">
+        <img src="https://source.unsplash.com/random">
+      </div>
+    </div>    
+  </div>
+
+  <div>
+    <div class="map" >
+      <h2>周辺情報</h2>
+      <!-- 地名入力用のinputを追加 -->
+      <input id="address" type="textbox" class="form-control" value="厚木">
+      <span>※地名を入力してください。</span><br>
+      <!-- buttonをクリックしたらcodeAddressを実行　-->
+      <input type="button" value="検索" class="btn btn-info" onclick="codeAddress()">
+      <div id='map'></div> 
+    </div>
+  </div>
+  <div class="news">
+  <% @news.each do |news| %>
+    <div class="news-box">
+      <%= link_to news.url do %>
+        <% if news.urlToImage.present? %>
+          <%= image_tag(news.urlToImage, class: "item-img") %>
+        <% else %>
+          <%= image_tag("dammy-cover.png", class: "item-img") %> 
+        <% end %>
+        <div class="article-body">
+          <p class="article-title-name">
+            <%= news.title.truncate(30) %>
+          </p>
+        </div>
+      <% end %>
+      <div class="tags">
+        <div class="article-body">
+          <div class="article-user">
+            <%= news.author %>
+          </div>
+        </div>
+        <div class="created-time">
+          <%= time_ago_in_words(news.publishedAt) %>前
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= paginate @news %>
+  </div>
+</div>
+
+
+<style>
+
+#map{
+  height: 400px;
+}
+
+</style>
+
+<script>
+let map
+let geocoder
+
+function initMap(){
+  // geocoderを初期化
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+  center: {lat: 35.4397198, lng: 139.3640735},
+  zoom: 16
+  });
+}
+
+function codeAddress(){
+  // 入力を取得
+  let inputAddress = document.getElementById('address').value;
+
+  // geocodingしたあとmapを移動
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+　　　　　　　　　　　　// map.setCenterで地図が移動
+      map.setCenter(results[0].geometry.location);
+
+　　　　　　　　　　　　// google.maps.MarkerでGoogleMap上の指定位置にマーカが立つ
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAP_API_KEY'] %>&callback=initMap" async defer></script>

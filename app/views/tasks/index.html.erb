@@ -1,0 +1,39 @@
+<% provide(:title, 'All Tasks') %>
+<h1 class="base-font-color">タスク一覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
+  <%= will_paginate %>
+  <table class="table table-condensed base-font-color" id="table-users">
+    <thead>
+      <tr>
+        <th>タスク名</th>
+        <th class="center">詳細</th>
+        <th>学習時間</th>
+        <th>進捗時間</th>
+      </tr>
+    </thead>
+
+    <% @tasks.each do |task| %>
+      <tr>
+        <td>
+            <%= link_to task.name, show_task_user_path(@user, task.id), class: "base-font-color" %>
+        </td>
+        <td class="center"><%= task.detail %></td>
+        <td class="center"><%= task.total %>時間</td>
+        <td class="center"><%= task.progress %>%</td>
+        <td class="center">
+            <%= link_to "編集", edit_task_user_path(@user, task.id), class: "btn btn-success"  %>
+            <%= link_to "削除", delete_task_user_path(@user, task.id) , method: :delete,
+                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate %>
+</div>
+
+<style>
+  .container {
+    color: #fff;
+  }
+</style>

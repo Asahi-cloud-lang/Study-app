@@ -1,0 +1,100 @@
+/* ユーザー情報テーブル */
+
+.user-table {
+  vertical-align: middle;
+  text-align: center;
+  color: #fff;
+}
+
+.user-table th{
+  text-align: center;  
+}
+
+/* 入力フォーム */
+
+.label-signup {
+  margin-top: 5px;
+}
+
+.btn-signup {
+  margin-top: 10px;
+}
+
+.label-user--edit {
+  margin-top: 5px;
+}
+
+.btn-user--edit {
+  margin-top: 10px;
+}
+
+/* ユーザー一覧ページ */
+
+#table-users {
+  td {
+    vertical-align: middle;
+  }  
+}
+
+// お天気ボックス
+
+.weather-box {
+  background-color:rgba(255,255,255,0.8);
+  padding: 10px;
+  text-align: -webkit-center;
+  display: flex;
+  justify-content: center;
+}
+
+.weather-box-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.weather-content {
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+
+.weather {
+  width: 50%;
+}
+
+.scenery {
+    width: 30%;
+    text-align: -webkit-center;
+}
+
+.scenery img {
+    width: 100%;
+    max-height: 490px;
+    margin-left: 20px;
+    border-radius: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .weather-box {
+    flex-direction: column;
+  }
+  
+  .weather {
+    width: 100%;
+  }
+  
+  .scenery {
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .scenery img {
+    width: 60%;
+    margin-left: unset;
+  }
+  
+  .news-box {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+}

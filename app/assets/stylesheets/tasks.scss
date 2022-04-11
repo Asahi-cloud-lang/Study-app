@@ -1,0 +1,195 @@
+// Place all the styles related to the tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.label-task {
+    margin-top: 10px;
+}
+
+.btn-task {
+    margin-top: 10px;
+}
+
+.task-box {
+    padding: 10px;
+    margin: 40px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 80%;
+}
+
+.task-box h2 {
+    font-size: 2rem;
+}
+
+.task-box ul {
+    margin-bottom: 30px;
+    list-style: none;
+}
+
+.task-box li {
+    margin-bottom: 10px;
+}
+
+.task-box li .task-name {
+    font-size: 2rem;
+    padding-right: 20px;
+}
+
+.task-progress {
+    display: flex;
+}
+
+.task-progress span {
+    padding-top: 10px;
+}
+
+.task-graph {
+    margin-bottom: 10px;
+}
+
+.task-btn {
+    margin: 30px;
+}
+
+.task-line {
+    margin-bottom: 30px;
+}
+
+.task-show {
+    padding: 10px;
+    background-color:rgba(255,255,255,0.8);
+}
+
+.task-content {
+    padding: 30px;
+}
+
+#timer {
+    margin: 0 auto;
+    width: 60%;
+    text-align: center;
+}
+
+.timer_name {
+    font-size: 1rem;
+    padding-bottom: 5px;
+    color: #fff;
+}
+
+#timer_text {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.task-stopwatch {
+    background-color: black;
+    width: 150px;
+    padding: 50px 30px;
+    border-radius: 70px;
+    margin: 20px auto;
+}
+
+.task-content-title {
+    padding: 20px 10px;
+    font-size: 2rem;
+}
+
+.task-content-detail {
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+.task-icon {
+    width: 10%;
+    background-color: #fff;
+    border: 3px solid;
+    margin-left: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    .task-icon {
+        width: 170px;
+        margin-left: 10px;
+    }
+}
+
+.task-message {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.map {
+    padding: 10px;
+    background-color:rgba(255,255,255,0.8);
+}
+
+.map h2 {
+    font-size: 2rem;
+    letter-spacing: 1.5;
+}
+
+.news {
+    text-align: center;
+    background-color:rgba(255,255,255,0.8);
+}
+
+.news-box {
+    padding: 10px;
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+}
+
+.item-img {
+    width: 100%;
+}
+
+.article-title-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.task-content-detail {
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+.task-content select {
+    width: 70px;
+    padding: 5px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.task-total {
+    display: flex;
+}
+
+.task-total span {
+    padding-top: 10px;
+}
+
+.task-total .form-control {
+    width: unset;
+    display: unset;
+}
+
+/*ページネーション自体のデザイン*/
+.pagination>li>a {          
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+/* 表示しているページ番号のデザイン */
+.pagination>.active>a {     
+  background: #93c9ff;     /*背景の色を変える*/
+  border-radius: 15px;     /*角を丸くする*/
+}
+
+/*ホバー時のデザイン*/
+.pagination>li>a:hover {        
+  border-radius: 15px;    /*角を丸くする*/
+}
+

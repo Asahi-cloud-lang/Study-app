@@ -1,0 +1,250 @@
+<% provide(:title, 'Show Task') %>
+<% provide(:button_text, '学習時間合算') %>
+<div class="task-show">
+  <h1>タスク詳細</h1>
+  <div class="row">
+    <div>
+      <div class="task-content">
+        <div class="task-icon"><img src="https://joeschmoe.io/api/v1/random" /></div>
+        <div class="task-content-title"><%= @task.name %></div>
+        <div class="task-content-detail"><%= @task.detail %></div>
+        <div class="task-content-detail">合計<%= @task.total.to_f %>時間</div>
+        <div class='task-select'>
+          <%= form_with(model: @task, url: update_task_user_path, local: true, id: "task-form") do |f| %>
+            <%= f.label :status, class: "label-task task-content-detail" %>
+            <%= f.select :status, {'未完了': false, '完了': true}, { class: "form-control task-select" } %>
+          <% end %>
+        </div>
+        <div class='task-total'>
+          <%= form_with( url: task_total_user_path, local: true, id: "task-total") do |f| %>
+            <%= f.label "学習時間", class: "label-task task-content-detail" %>
+            <%= f.number_field :total, in: 1.0..200.0, step: 0.1, class: "form-control" %><span>時間</span>
+            <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-task" %><br>
+            <span class="text-info">※学習した時間を入力し、学習時間合算ボタンをクリックしてください。</span>
+          <% end %>
+        </div>
+        <div class="task-graph">
+          <%# グラフ %>
+          <%= bar_chart [['進捗', @task.progress]], min: 0, max: 100, height: "60px" %>
+        </div>
+        <div id="timer">
+          <div class="task-stopwatch">
+            <div class="timer_name">学習時間</div>
+            <p id="timer_text">
+              <span id="hour">00</span> :
+              <span id="min">00</span> :
+              <span id="sec">00</span>
+            </p>
+          </div>
+          <div class="btn-group btn-group-lg" role="group" >
+            <button type="button" class="btn btn-info" id="reset" disabled>Reset</button>
+            <button type="button" class="btn btn-info" id="start">Start</button>
+            <button type="button" class="btn btn-info" id="stop" disabled>Stop</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+//localStorageには[started_at, working_on, min_time, hour_time]の４つの変数が保持されている。
+
+(function(){
+  
+$('select').change( function() {
+    var ret = confirm("更新してもよろしいですか？");
+    if(!ret){
+      return false;
+    }
+    $('#task-form').submit();
+})
+
+var call_function_each = 100
+
+var mid = 0;
+var now;
+
+
+var hour_time = 0;
+var min_time = 0;
+var sec_time = 0;
+
+var count;
+
+var hour = $("#hour");
+var min = $("#min");
+var sec = $("#sec");
+
+var start = $("#start");
+var stop = $("#stop");
+var reset = $("#reset");
+
+//localStorageにどちらの値もない場合は処理する必要ないので始めに条件分岐
+if(localStorage.getItem('started_at')){
+  //ページ読み込みされたときに自動で行われる処理
+  window.onload = function(){
+    min_time  = Number(localStorage.getItem('min_time'));
+    hour_time = Number(localStorage.getItem('hour_time'));
+    count = setInterval(counter, call_function_each);
+    toggle();
+  }
+}
+
+if(localStorage.getItem('working_on') && !localStorage.getItem('started_at')){
+  window.onload = function(){
+    //以下のコードで経過時刻を取得
+    sec_time  = Number(localStorage.getItem('working_on'));
+    min_time  = Number(localStorage.getItem('min_time'));
+    hour_time = Number(localStorage.getItem('hour_time'));
+    //以下のコードで経過時刻を表示
+
+    if(sec_time < 9.5){
+      sec.html("0"+sec_time.toFixed(0));
+    }else if(sec_time < 10.5){
+      sec.html("10");
+    }else{
+      sec.html(sec_time.toFixed(0));
+    }
+
+    if(min_time < 10){
+      min.html("0"+min_time);
+    }else{
+      min.html(min_time);
+    }
+
+    if(hour_time < 10){
+      hour.html("0"+hour_time);
+    }else{
+      hour.html(hour_time);
+    }
+
+    toggle();
+  }  
+}
+
+//startボタンが押された時の処理.
+start.click(function(){
+  //localStorageに開始時刻が記録されているのに呼び出すと、データが初期化されるため条件分岐している。
+  now = new Date(); //現在時刻
+  localStorage.setItem('started_at', now);
+
+  $("#test").text(typeof localStorage.getItem('started_at'));
+  $("#test2").text(typeof localStorage.getItem('working_on'));
+  count = setInterval(counter, call_function_each);
+  toggle();
+});
+
+//stopボタンが押された時の処理
+stop.click(function(){
+  mid += (new Date() - now)/1000;
+  localStorage.setItem('working_on', mid);
+  localStorage.removeItem('started_at');
+  $("#test").text(typeof localStorage.getItem('started_at'));
+  $("#test2").text(typeof localStorage.getItem('working_on'));
+  clearInterval(count);
+  toggle();
+});
+
+//resetボタンが押された時の処理
+reset.click(function(){
+  mid = 0;
+  localStorage.clear();
+  $("#test").text(typeof localStorage.getItem('started_at'));
+  $("#test2").text(typeof localStorage.getItem('working_on'));
+  hour_time = 0;
+  min_time = 0;
+  hour.html("00");
+  min.html("00");
+  sec.html("00");
+  reset.prop("disabled", "gray");
+});
+//時間の計算
+function counter(){
+  if(localStorage.getItem('started_at')){
+    var now2 = localStorage.getItem('started_at');
+    now = Date.parse(now2);
+  }
+
+  if(localStorage.getItem('working_on')){
+    var mid2 = localStorage.getItem('working_on');
+    mid = Number(mid2);
+  }
+
+  sec_time = mid + ((new Date() - now)/1000);
+
+  //60秒経過した時の処理
+  if(sec_time > 59.4){
+      mid = 0;
+      localStorage.removeItem('working_on');
+      min_time ++;
+      localStorage.setItem('min_time',min_time);
+      now = new Date();
+      localStorage.setItem('started_at', now);
+      sec_time = 0;
+      sec.html();
+  }
+
+  if(min_time > 59.4){
+      hour_time ++;
+      localStorage.setItem('hour_time', hour_time);
+      min_time = 0;
+      min.html();
+  }
+
+  //秒数が10秒より小さかったら01, 02のようにする
+  //Note : .5以上の場合は次の数字に切り替わる
+  if(sec_time < 9.5){
+      sec.html("0"+sec_time.toFixed(0));
+  }else if(sec_time < 10.5){
+      sec.html("10");
+  }
+  else{
+      sec.html(sec_time.toFixed(0));
+  }
+  //分数の表示のコード
+  if(min_time < 10){
+      min.html("0"+min_time);
+  }else{
+      min.html(min_time);
+  }
+  //時数の表示のコード
+  if(hour_time < 10){
+      hour.html("0"+hour_time);
+  }else{
+      hour.html(hour_time);
+  }
+
+  $("#test").text(typeof localStorage.getItem('started_at'));
+  $("#test2").text(typeof localStorage.getItem('working_on'));
+}
+
+//ボタンの切り替え
+
+function toggle(){
+  if(!localStorage.getItem('started_at')){
+      start.prop("disabled", false);
+      stop.prop("disabled", true);
+      reset.prop("disabled", false);
+  }else if(!start.prop("disabled")){
+      start.prop("disabled", true);
+      stop.prop("disabled", false);
+      reset.prop("disabled", true);
+  }else{
+      start.prop("disabled", false);
+      stop.prop("disabled", true);
+      reset.prop("disabled", false);
+  }
+}
+})();
+
+$('.btn-task').click( function() {
+    var ret = confirm("学習時間を合算してもよろしいですか？");
+    if(!ret){
+      return false;
+    }
+    $('#task-total').submit();
+})
+
+</script>
+
