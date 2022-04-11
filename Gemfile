@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '~> 5.1.6'
-gem 'rails-i18n' # 今回はこのgemを追加しています。
+gem 'rails-i18n'
 gem 'bcrypt'
 gem 'faker'
 gem 'bootstrap-sass'
@@ -33,6 +33,10 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :production do
+  gem 'pg', '0.20.0'
 end
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります
