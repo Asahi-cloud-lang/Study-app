@@ -2,7 +2,7 @@ class LinebotController < ApplicationController
   require 'line/bot'
   
     def index
-        render status: 200 , json: nil
+        render status: 200 , json: { status: 200, message: "Success" }
     end
 
     def push
