@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'static_pages#top'
   get '/signup', to: 'users#new'
   post '/line/:task_id', to: 'linebot#push', as: :linebot
-  get '/line', to: 'linebot#index', as: :linebot_get
+  post '/line', to: 'linebot#index', as: :linebot_post
 
   # ログイン機能
   get    '/login', to: 'sessions#new'
