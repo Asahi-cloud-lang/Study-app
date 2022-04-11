@@ -14,7 +14,7 @@ class LinebotController < ApplicationController
         }
         message={
             type: 'text',
-            text: @task.name
+            text: 'hellot'
            }
         user_id =  ENV['USER_ID']
         response = client.broadcast(message)
