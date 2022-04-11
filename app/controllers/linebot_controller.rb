@@ -6,6 +6,9 @@ class LinebotController < ApplicationController
     end
 
     def push
+        require 'net/http'
+        require 'uri'
+        require 'json' 
         @task = Task.find(params[:task_id])
         # message = {
         #     type: 'text',
