@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
   get '/signup', to: 'users#new'
-  post '/line/:task_id', to: 'linebot#push', as: :linebot
-  post '/line', to: 'linebot#index', as: :linebot_post
+  post '/chatwork/:task_id', to: 'chatwork#push_chatwork_message', as: :push_chatwork_message
 
   # ログイン機能
   get    '/login', to: 'sessions#new'

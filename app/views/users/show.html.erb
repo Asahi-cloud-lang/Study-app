@@ -43,8 +43,8 @@
           <%= bar_chart [['進捗', task.progress]], min: 0, max: 100, height: "60px" %>
         </div>
         <div class="task-line">
-          <%= link_to "タスクをLINEに連携", linebot_path(task.id), method: :post,
-            data: { confirm: "Lineに連携してよろしいですか？" }, class: "btn btn-info"  %>
+          <%= link_to "タスクをchatworkに連携", push_chatwork_message_path(task.id), method: :post,
+            data: { confirm: "chatworkに連携してよろしいですか？" }, class: "btn btn-info"  %>
         </div>
       <% end %>
     </ul>
