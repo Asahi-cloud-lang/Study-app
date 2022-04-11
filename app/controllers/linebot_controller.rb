@@ -9,15 +9,10 @@ class LinebotController < ApplicationController
          @task = Task.find(params[:task_id])
         message={
             type: 'text',
-            text: @task.name,
-            text: @task.detail,
-            text: @task.progress,
-            text: @task.total
+            text: @task.name
            }
         user_id =  ENV['USER_ID']
         response = client.push_message(user_id, message)
-        flash[:success] = 'LINEに連携しました。'
-        redirect_to user_path
     end
 
     private
