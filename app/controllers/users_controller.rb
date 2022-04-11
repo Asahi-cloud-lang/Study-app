@@ -45,31 +45,31 @@ class UsersController < ApplicationController
         @weather = @result["list"][0]["weather"][0]["description"]
         if @weather = "clear sky"
           @weather = "晴れ"
-          @img_url = "/assets/clear_sky.png"
+          @img_url = 'clear_sky.png'
         elsif @weather = "scattered cloud"
           @weather = "曇りのち晴れ"
-          @img_url = "/assets/scattered_cloud.png"
+          @img_url = 'scattered_cloud.png'
         elsif  @weather = "thunderstorm rain"
           @weather = "雨のち雷"
-          @img_url = "/assets/thunderstorm_rain.png"
+          @img_url = 'thunderstorm_rain.png'
         elsif  @weather = "thunderstorm"
           @weather = "雷"
-          @img_url = "/assets/thunderstorm.png"
+          @img_url = 'thunderstorm.png'
         elsif  @weather = "rain"
           @weather = "雨"
-          @img_url = "/assets/rain.png"
+          @img_url = 'rain.png'
         elsif  @weather = "snow"
           @weather = "雪"
-          @img_url = "/assets/snow.png"
+          @img_url = 'snow.png'
         elsif  @weather = "light rain"
           @weather = "小雨"
-          @img_url = "/assets/light_rain.png"
+          @img_url = 'light_rain.png'
         elsif  @weather = "drizzle"
           @weather = "霧"
-          @img_url = "/assets/drizzle.png"
+          @img_url = 'drizzle.png'
         elsif  @weather = "cloud"
           @weather = "曇り"
-          @img_url = "/assets/cloud.png"
+          @img_url = 'cloud.png'
         end
         
         # 今の気温

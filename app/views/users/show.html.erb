@@ -61,7 +61,7 @@
     <div class="weather-box">
       <div class="weather">
         <h2 class="weather-box-title">本日の天気（厚木市）</h2>
-        <div><img src="<%= @img_url %>" alt=""></div>
+        <div><%= image_tag @img_url %></div>
         <div class="weather-content"><%= @weather %></div>
         <%= line_chart [['今の気温', @now_temp_max.round(1)],['3時間後の気温', @three_temp_max.round(1)],['6時間後の気温', @six_temp_max.round(1)],['9時間後の気温', @nine_temp_max.round(1)]], min: 0, max: 30, height: "200px" %>
       </div>
