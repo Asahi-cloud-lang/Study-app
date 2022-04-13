@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 20220327154448) do
     t.string "detail"
     t.boolean "status", default: false
     t.integer "user_id"
-    t.float "total"
-    t.integer "progress"
+    t.float "total", default: 0.0
+    t.integer "progress", default: 0
     t.datetime "start_day"
     t.datetime "finish_day"
     t.datetime "created_at", null: false

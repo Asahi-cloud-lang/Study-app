@@ -157,10 +157,10 @@
 }
 
 .task-content select {
-    width: 70px;
+    display: inline-block;
+    width: 100px;
     padding: 5px;
     font-weight: bold;
-    margin-left: 20px;
 }
 
 .task-total {

@@ -12,7 +12,7 @@
         <div class='task-select'>
           <%= form_with(model: @task, url: update_task_user_path, local: true, id: "task-form") do |f| %>
             <%= f.label :status, class: "label-task task-content-detail" %>
-            <%= f.select :status, {'未完了': false, '完了': true}, { class: "form-control task-select" } %>
+            <%= f.select :status, {'未完了': false, '完了': true}, { include_blank: false }, { class: "form-control task-select" }%>
           <% end %>
         </div>
         <div class='task-total'>

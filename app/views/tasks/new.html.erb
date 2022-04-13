@@ -8,10 +8,10 @@
       <%= render 'shared/error_messages', object: @task %>
 
       <%= f.label "名前", class: "label-task" %>
-      <%= f.text_field :name, class: "form-control" %>
+      <%= f.text_field :name, class: "form-control", required: true %>
 
       <%= f.label "詳細", class: "label-task" %>
-      <%= f.text_area :detail, class: "form-control" %>
+      <%= f.text_area :detail, class: "form-control", required: true %>
 
       <%= f.label "開始予定日", class: "label-task" %>
       <%= f.date_field :start_day, class: "form-control" %>
