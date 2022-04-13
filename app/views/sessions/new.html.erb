@@ -1,8 +1,8 @@
 <% provide(:title, "login") %>
-<h1>ログイン</h1>
+<h1 class="base-font-color">ログイン</h1>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3 form-font-color">
     <%= form_with(scope: :session, url: login_path, local: true) do |f| %>
 
       <%= f.label :email, "メールアドレス", class: "label-login" %>
@@ -12,7 +12,7 @@
       <%= f.password_field :password, class: 'form-control' %>
 
       <%= f.label :remember_me, class: "checkbox inline checkbox-login", for: "remember-me" do %>
-        <%= f.check_box :remember_me, id: "remember-me" %>
+      <%= f.check_box :remember_me, id: "remember-me", class: "remember-me" %>
         <span>ログイン情報を記憶する</span>
       <% end %>
 
@@ -23,3 +23,7 @@
     </p>
   </div>
 </div>
+
+<style>
+
+</style>
