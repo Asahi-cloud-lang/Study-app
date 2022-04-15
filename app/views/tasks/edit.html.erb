@@ -19,7 +19,7 @@
       <%= f.label :finish_day, class: "label-task" %>
       <%= f.date_field:finish_day, class: "form-control" %>
       
-      <%= f.label :status, class: "label-task task-content-detail" %>
+      <%= f.label :status, class: "label-task" %>
       <%= f.select :status, {'未完了': false, '完了': true}, { include_blank: false }, { class: 'form-control' }%>
       
       <%= f.label :progress, class: "label-task" %>

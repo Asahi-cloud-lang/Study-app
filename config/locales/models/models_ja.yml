@@ -8,6 +8,7 @@ ja:
           id: ID
           name: 名前
           email: メールアドレス
+          post_id: お住まいの都道府県
           department: 所属
           password: パスワード
           password_confirmation: パスワード再入力
