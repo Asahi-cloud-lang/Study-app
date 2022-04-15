@@ -4,6 +4,6 @@ class ContactMailer < ApplicationMailer
     @user = user
     @task = task
     mail( :to => @user.email,
-          :subject => '【Study App】 お問い合わせありがとうございます' )
+          :subject => '【Study App】 ご利用頂きありがとうございます' )
   end
 end
