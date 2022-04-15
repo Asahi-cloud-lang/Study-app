@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
   get '/signup', to: 'users#new'
-  post '/chatwork/:task_id', to: 'chatwork#push_chatwork_message', as: :push_chatwork_message
 
   # ログイン機能
   get    '/login', to: 'sessions#new'
@@ -12,6 +11,7 @@ Rails.application.routes.draw do
     member do
       get 'edit_basic_info'
       patch 'update_basic_info'
+      post '/mail/:task_id', to: 'contacts#sending', as: :mail
       get 'alltask', to: 'tasks#index', as: :all_task
       get 'new_task', to: 'tasks#new'
       post 'new_task', to: 'tasks#create'

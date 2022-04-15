@@ -14,8 +14,10 @@ class UsersController < ApplicationController
     @tasks = Task.where(user_id: @user.id).where(status: false)
     @sum = 10
     
+    @post = Post.find(@user.post_id)
+    
     # hash形式でパラメタ文字列を指定し、URL形式にエンコード
-    params = URI.encode_www_form({q: 'Atsugi', units: 'metric', appid: ENV['WEATHER_API_KEY']})
+    params = URI.encode_www_form({q: @post.name, units: 'metric', appid: ENV['WEATHER_API_KEY']})
     # URIを解析し、hostやportをバラバラに取得できるようにする
     uri = URI.parse("http://api.openweathermap.org/data/2.5/forecast?#{params}")
     # リクエストパラメタを、インスタンス変数に格納
@@ -163,7 +165,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :post_id)
     end
     
     def basic_info_params

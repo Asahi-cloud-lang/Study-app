@@ -12,6 +12,9 @@
 
   <%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %>
   <%= f.password_field :password_confirmation, class: "form-control" %>
+  
+  <%= f.label :post_id, class: "label-#{yield(:class_text)}" %>
+  <%= f.select :post_id, options_for_select(Post.post_areas, selected: @user.post_id), { include_blank: false }, { class: 'form-control' }%>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
 <% end %>

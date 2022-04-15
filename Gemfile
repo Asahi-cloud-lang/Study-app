@@ -23,6 +23,7 @@ gem "news-api"
 gem 'kaminari'
 gem 'gmaps4rails'
 gem 'geocoder'
+gem 'sendgrid-ruby'
 
 group :development, :test do
   gem 'sqlite3'

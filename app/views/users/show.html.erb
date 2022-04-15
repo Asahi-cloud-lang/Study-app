@@ -43,8 +43,8 @@
           <%= bar_chart [['進捗', task.progress]], min: 0, max: 100, height: "60px" %>
         </div>
         <div class="task-line">
-          <%= link_to "タスクをchatworkに連携", push_chatwork_message_path(task.id), method: :post,
-            data: { confirm: "chatworkに連携してよろしいですか？" }, class: "btn btn-info"  %>
+          <%= link_to "タスクをmailで送信", mail_user_path(@user,task.id), method: :post,
+            data: { confirm: "mailを送信してよろしいですか？" }, class: "btn btn-info"  %>
         </div>
       <% end %>
     </ul>
@@ -60,7 +60,7 @@
   <div>
     <div class="weather-box">
       <div class="weather">
-        <h2 class="weather-box-title">本日の天気（厚木市）</h2>
+        <h2 class="weather-box-title">本日の天気（<%= @post.name %>）</h2>
         <div><%= image_tag @img_url %></div>
         <div class="weather-content"><%= @weather %></div>
         <%= line_chart [['今の気温', @now_temp_max.round(1)],['3時間後の気温', @three_temp_max.round(1)],['6時間後の気温', @six_temp_max.round(1)],['9時間後の気温', @nine_temp_max.round(1)]], min: 0, max: 30, height: "200px" %>
@@ -73,9 +73,9 @@
 
   <div>
     <div class="map" >
-      <h2>周辺情報</h2>
+      <h2><%= @post.name %>の周辺情報</h2>
       <!-- 地名入力用のinputを追加 -->
-      <input id="address" type="textbox" class="form-control" value="厚木">
+      <input id="address" type="textbox" class="form-control" value="<%= @post.name %>" >
       <span>※地名を入力してください。</span><br>
       <!-- buttonをクリックしたらcodeAddressを実行　-->
       <input type="button" value="検索" class="btn btn-info" onclick="codeAddress()">
@@ -131,8 +131,8 @@ function initMap(){
   geocoder = new google.maps.Geocoder()
 
   map = new google.maps.Map(document.getElementById('map'), {
-  center: {lat: 35.4397198, lng: 139.3640735},
-  zoom: 16
+  center: {lat: <%= @post.latitude %>, lng: <%= @post.longitude %> },
+  zoom: 10
   });
 }
 
